@@ -1,13 +1,13 @@
-from typing import Optional
+from typing import Optional, List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, conint
 
 # Base Item Class
 class ItemBase(BaseModel):
     name: Optional[str] = None
     brand: Optional[str] = None
     supplier: Optional[str] = None
-    quantity: Optional[int] = 0
+    quantity: Optional[conint(ge=0)] = 0
 
 
 # Properties must receive when creating new item

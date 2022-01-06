@@ -24,19 +24,18 @@ stages:
         supplier: snowdevil
     response:
       status_code: 200
-      
-    
+
   - name: Creating new item with only required fields (no quantity field)
     request:
       url: "{host}{items_prefix}"
       method: POST
       json:
-        name: t-shirt 
+        name: t-shirt
         brand: swag
         supplier: shopify
     response:
       status_code: 200
-  
+
   - name: Creating new item without required field
     request:
       url: "{host}{items_prefix}"
@@ -44,16 +43,23 @@ stages:
       json:
         name: backpack
     response:
-      status_code: 422
+      status_code: 400
+
+  - name: Creating new item with quantity smaller than 0
+    request:
+      url: "{host}{items_prefix}"
+      method: POST
+      json:
+        name: backpack
+        brand: Local
+        supplier: YourLocalShop
+        quantity: -1
+    response:
+      status_code: 400
 
   - name: Get all items
     request:
       url: "{host}{items_prefix}"
       method: GET
-      json:
-        name: backpack
     response:
       status_code: 200
-
-
-
