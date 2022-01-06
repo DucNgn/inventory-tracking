@@ -13,12 +13,33 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
 class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+    """
+    The generic base class for all CRUD operations.
+    Child Classes inherit this CRUDBase has instance access to CRUD operations.
+
+    :ModelType The model from database (must be derived from app.models.base.BaseDBModel)
+    :CreateSchemaType The schema for creating new object
+    :UpdateSchemaType The schema for updating an object
+    """
+
     def __init__(self, model: Type[ModelType]):
         self.model = model
 
     async def create(
         self, db: AsyncIOMotorDatabase, obj_in: CreateSchemaType
     ) -> ModelType:
+        """
+        Create a new object of ModelType in the database.
+
+        Parameters
+        ----------
+        :db the database collection
+        :obj_in new object to create, must of CreateSchemaType schema
+
+        Returns
+        -------
+        :return the newly created object
+        """
         obj_in_data = jsonable_encoder(obj_in)
         operation = await db.insert_one(obj_in_data)
         new_record = await self.read_by_id(db=db, id=operation.inserted_id)
@@ -27,11 +48,34 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     async def read_by_id(
         self, db: AsyncIOMotorDatabase, id: str
     ) -> Optional[ModelType]:
+        """
+        Retrive a record in the database by ID.
+
+        Parameters
+        ----------
+        :db the database collection
+        :id the object id of the record to be retrieved
+
+        Returns
+        -------
+        :return the retrieved object, None if not found.
+        """
         res = await db.find_one({"_id": ObjectId(id)})
         if res:
             return self.model(**res, id=res["_id"])
 
     async def read_all(self, db: AsyncIOMotorDatabase) -> List[ModelType]:
+        """
+        Retrive all records in the database.
+
+        Parameters
+        ----------
+        :db the database collection
+
+        Returns
+        -------
+        :return a list of records (ModelType) in the collection
+        """
         res = []
         async for record in db.find():
             res.append(self.model(**record, id=record["_id"]))
@@ -43,16 +87,41 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         id: str,
         obj_in: Union[UpdateSchemaType, Dict[str, any]],
     ) -> Optional[ModelType]:
+        """
+        Update a record in the database by id.
+
+        Parameters
+        ----------
+        :db the database collection
+        :id the object ID of the record to be updated
+        :obj_in the updated data for the record.
+
+        Returns
+        -------
+        :return the updated record, None if not found
+        """
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
             update_data = obj_in.dict(exclude_unset=True)
 
-        ops = await db.update_one({"_id": ObjectId(id)}, {"$set": update_data})
+        await db.update_one({"_id": ObjectId(id)}, {"$set": update_data})
         updated_record = await self.read_by_id(db=db, id=id)
         return updated_record
 
-    async def delete(self, db: AsyncIOMotorDatabase, id: str) -> ModelType:
+    async def delete(self, db: AsyncIOMotorDatabase, id: str) -> Optional[ModelType]:
+        """
+        Delete a record in the database by id.
+
+        Parameters
+        ----------
+        :db the database collection
+        :id the object ID of the record to be deleted
+
+        Returns
+        -------
+        :return the deleted record, None if not found
+        """
         obj = await self.read_by_id(db, id)
         await db.delete_many({"_id": ObjectId(id)})
         return obj

@@ -2,6 +2,10 @@ from bson import ObjectId
 
 
 class OID(str):
+    """
+    FastAPI Field Wrapper for Mongo ObjectID (see https://github.com/tiangolo/fastapi/issues/1515)
+    """
+
     @classmethod
     def __get_validators__(cls):
         yield cls.validate

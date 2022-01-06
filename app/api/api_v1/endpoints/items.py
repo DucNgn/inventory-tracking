@@ -4,11 +4,13 @@ import io
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from starlette.responses import JSONResponse
 
 from app import crud, schemas
 from app.api import deps
 
+"""
+APIs to interact with Items
+"""
 router = APIRouter()
 
 
@@ -28,7 +30,7 @@ async def all_items(db: AsyncIOMotorDatabase = Depends(deps.get_items_coll)) -> 
     response_description="Get a .csv file of the inventory",
 )
 async def get_csv(db: AsyncIOMotorDatabase = Depends(deps.get_items_coll)) -> Any:
-    record_df = await crud.item.get_csv(db=db)
+    record_df = await crud.item.get_all_items_dataframe(db=db)
     stream = io.StringIO()
     record_df.to_csv(stream, index=False)
     response = StreamingResponse(iter([stream.getvalue()]), media_type="text/csv")
@@ -46,7 +48,9 @@ async def get_item_by_id(
 ) -> Any:
     retrived_item = await crud.item.read_by_id(db=db, id=id)
     if not retrived_item:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Requested item not found"
+        )
     return retrived_item
 
 
@@ -76,7 +80,7 @@ async def update_item_by_id(
     retrived_item = await crud.item.read_by_id(db=db, id=id)
     if not retrived_item:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Item not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Requested item not found"
         )
     updated_item = await crud.item.update(db=db, id=id, obj_in=item_in)
     return updated_item
@@ -93,7 +97,7 @@ async def delete_item_by_id(
     retrived_item = await crud.item.read_by_id(db=db, id=id)
     if not retrived_item:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Item not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Requested item not found"
         )
     item = await crud.item.delete(db=db, id=id)
     return item

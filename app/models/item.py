@@ -7,6 +7,10 @@ from app.models.base import BaseDBModel
 
 
 class Item(BaseDBModel):
+    """
+    Item stored in the database.
+    """
+
     id: Optional[OID]
     name: str = Field(...)
     brand: str = Field(...)

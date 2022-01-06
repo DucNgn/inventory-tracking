@@ -36,6 +36,8 @@ Interactive deployed API at: www.inventoryapi.ducnguyen.dev/docs
 + `uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload` to start the API service in development mode (hot reload).
 + Go to `localhost:8000/docs` to access the interactive Swagger UI of the API.
 
+> While developing, run `pre-commit install` before committing any changes. [pre-commit](https://pre-commit.com/) runs a check through all changed files before committing.
+
 ## Features:
 
 ### For clients:
@@ -56,10 +58,12 @@ Interactive deployed API at: www.inventoryapi.ducnguyen.dev/docs
 + Environment file is parsed by `.env`, validated by [Pydantic](https://pydantic-docs.helpmanual.io/)
 + Containerized with [Docker](https://www.docker.com/) and [Compose](https://docs.docker.com/compose/) for easy deployment.
 + [pre-commit hook](https://pre-commit.com/) for auto linting before git commit.
++ Api tests done by [Tavern](https://tavern.readthedocs.io/en/latest)
 
-
-## Code Organization:
-
+## Coding Organization:
++ `app` is the main directory containing all the source code.
++ `./app/main.py` is the main start up file.
++ Each of the folder in `./app` has a `README.md` for more details.
 
 ## Deployment:
 The project is containerized with docker-compose and deployed with docker-compose on my personal [Digital Ocean](https://www.digitalocean.com/) VM.

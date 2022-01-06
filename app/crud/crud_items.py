@@ -7,7 +7,18 @@ from app.schemas.item import ItemCreate, ItemUpdate
 
 
 class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
-    async def get_csv(self, db: AsyncIOMotorDatabase) -> pd.DataFrame:
+    async def get_all_items_dataframe(self, db: AsyncIOMotorDatabase) -> pd.DataFrame:
+        """
+        Extract a pandas dataframe of all items in the inventory
+
+        Parameters
+        ----------
+        :db the database collection
+
+        Returns
+        -------
+        :return a Pandas dataframe of all items
+        """
         all_records = []
         async for record in db.find():
             record["id"] = record.pop("_id")

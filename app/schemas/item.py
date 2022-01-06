@@ -1,6 +1,10 @@
-from typing import Optional, List
+from typing import Optional
 
 from pydantic import BaseModel, conint
+
+"""
+Schemas for interacting with Items
+"""
 
 # Base Item Class
 class ItemBase(BaseModel):
@@ -17,7 +21,7 @@ class ItemCreate(ItemBase):
     supplier: str
 
 
-# Properties must receive when getting new item
+# Properties must receive when updating an item
 class ItemUpdate(ItemBase):
     pass
 

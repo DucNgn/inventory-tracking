@@ -1,7 +1,7 @@
-import uvicorn
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
+import uvicorn
 
 from app.api.api_v1.api import api_router
 from app.config import get_settings
@@ -14,6 +14,9 @@ app.include_router(api_router, prefix=f"{settings.API_V1_PREFIX}")
 @app.exception_handler(ValueError)
 @app.exception_handler(RequestValidationError)
 async def value_error_exception_handler(request: Request, exc):
+    """
+    Custom Exception Handler
+    """
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST, content={"message": str(exc)}
     )
