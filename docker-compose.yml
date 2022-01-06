@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  inventory_api:
+    container_name: inventory_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: mongo_password
