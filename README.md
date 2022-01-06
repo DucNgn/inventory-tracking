@@ -38,6 +38,25 @@ Interactive deployed API at: www.inventoryapi.ducnguyen.dev/docs
 
 ## Features:
 
+### For clients:
++ [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) Functionality. Users are able to:
+  + Create new item in the inventory
+  + View item by ID
+  + View all items in the inventory
+  + Delete item by ID
+  + Update item by ID
++ Export all products in the inventory to a CSV file.
+
+### For developers:
++ [Swagger UI](https://swagger.io/tools/swagger-ui), allows visualizing and interacting with the API without a front-end. It was auto generated from OpenAPI from FastAPI.
++ Async functionalities.
++ Easy, extendable models and schemas.
++ Schemas are validated by [Pydantic](https://pydantic-docs.helpmanual.io/).
++ Wrapped `ObjectID` (`_id` field) from MongoDB by a custom field, compatible with openapi standard. More information [here](https://github.com/tiangolo/fastapi/issues/1515).
++ Environment file is parsed by `.env`, validated by [Pydantic](https://pydantic-docs.helpmanual.io/)
++ Containerized with [Docker](https://www.docker.com/) and [Compose](https://docs.docker.com/compose/) for easy deployment.
++ [pre-commit hook](https://pre-commit.com/) for auto linting before git commit.
+
 
 ## Code Organization:
 
