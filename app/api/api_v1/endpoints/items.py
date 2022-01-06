@@ -54,14 +54,8 @@ async def update_item(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Item not found"
         )
-    success = await crud.item.update(db=db, id=id, obj_in=item_in)
-    if success:
-        updated_item = await crud.item.read(db=db, id=id)
-        return updated_item
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Error occurred"
-        )
+    updated_item = await crud.item.update(db=db, id=id, obj_in=item_in)
+    return updated_item
 
 
 @router.delete("/{id}", response_model=schemas.Item)

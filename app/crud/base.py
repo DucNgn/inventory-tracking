@@ -5,9 +5,9 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
-from app.db.base_class import Base
+from app.models.base import BaseDBModel
 
-ModelType = TypeVar("ModelType", bound=Base)
+ModelType = TypeVar("ModelType", bound=BaseDBModel)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
@@ -20,19 +20,19 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self, db: AsyncIOMotorDatabase, obj_in: CreateSchemaType
     ) -> ModelType:
         obj_in_data = jsonable_encoder(obj_in)
-        new_obj = await db.insert_one(obj_in_data)
-        new_record = await self.read(db=db, id=new_obj.inserted_id)
+        operation = await db.insert_one(obj_in_data)
+        new_record = await self.read(db=db, id=operation.inserted_id)
         return new_record
 
     async def read(self, db: AsyncIOMotorDatabase, id: str) -> Optional[ModelType]:
         res = await db.find_one({"_id": ObjectId(id)})
         if res:
-            return res
+            return self.model(**res, id=res["_id"])
 
     async def read_multi(self, db: AsyncIOMotorDatabase) -> List[ModelType]:
         res = []
         async for record in db.find():
-            res.append(record)
+            res.append(self.model(**record, id=record["_id"]))
         return res
 
     async def update(
@@ -46,12 +46,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         else:
             update_data = obj_in.dict(exclude_unset=True)
 
-        updated_record = await db.update_one(
-            {"_id": ObjectId(id)}, {"$set": update_data}
-        )
-        if updated_record:
-            return True
-        return False
+        ops = await db.update_one({"_id": ObjectId(id)}, {"$set": update_data})
+        updated_record = await self.read(db=db, id=id)
+        return updated_record
 
     async def delete(self, db: AsyncIOMotorDatabase, id: str) -> ModelType:
         obj = await self.read(db, id)

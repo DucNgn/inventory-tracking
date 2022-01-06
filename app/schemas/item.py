@@ -24,14 +24,11 @@ class ItemUpdate(ItemBase):
 
 # Properties stored in DB
 class ItemInDBBase(ItemBase):
+    id: str
     name: str
     brand: str
     supplier: str
     quantity: int
-
-    class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
 
 
 # Properties must return to client

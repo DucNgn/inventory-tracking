@@ -1,10 +1,12 @@
 from typing import Optional
-from pydantic import Field, BaseModel
+
+from pydantic import Field
 
 from app.models.OID import OID
+from app.models.base import BaseDBModel
 
 
-class Item(BaseModel):
+class Item(BaseDBModel):
     id: Optional[OID]
     name: str = Field(...)
     brand: str = Field(...)

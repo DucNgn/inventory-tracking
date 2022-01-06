@@ -54,7 +54,6 @@ stages:
         name: backpack
     response:
       status_code: 200
-      json:
 
 
 
