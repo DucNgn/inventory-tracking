@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 
+
 def response(data, message: str) -> dict:
     return {"data": [data], "code": 200, "message": message}
 

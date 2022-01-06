@@ -24,7 +24,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         new_record = await self.read_by_id(db=db, id=operation.inserted_id)
         return new_record
 
-    async def read_by_id(self, db: AsyncIOMotorDatabase, id: str) -> Optional[ModelType]:
+    async def read_by_id(
+        self, db: AsyncIOMotorDatabase, id: str
+    ) -> Optional[ModelType]:
         res = await db.find_one({"_id": ObjectId(id)})
         if res:
             return self.model(**res, id=res["_id"])

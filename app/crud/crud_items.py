@@ -10,7 +10,7 @@ class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
     async def get_csv(self, db: AsyncIOMotorDatabase) -> pd.DataFrame:
         all_records = []
         async for record in db.find():
-            record['id'] = record.pop('_id')
+            record["id"] = record.pop("_id")
             all_records.append(record)
         record_df = pd.DataFrame.from_dict(all_records)
         return record_df
