@@ -3,10 +3,10 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from app.crud.base import CRUDBase
 from app.models.item import Item
-from app.schemas.item import ItemCreate, ItemUpdate
+from app.schemas.item import ItemCreate, ItemUpdate, ItemOID
 
 
-class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
+class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate, ItemOID]):
     async def get_all_items_dataframe(self, db: AsyncIOMotorDatabase) -> pd.DataFrame:
         """
         Extract a pandas dataframe of all items in the inventory

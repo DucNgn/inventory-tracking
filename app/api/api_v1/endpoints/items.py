@@ -44,7 +44,7 @@ async def get_csv(db: AsyncIOMotorDatabase = Depends(deps.get_items_coll)) -> An
     response_description="Get an item info by ID",
 )
 async def get_item_by_id(
-    id: str, db: AsyncIOMotorDatabase = Depends(deps.get_items_coll)
+    id: schemas.ItemOID, db: AsyncIOMotorDatabase = Depends(deps.get_items_coll)
 ) -> Any:
     retrived_item = await crud.item.read_by_id(db=db, id=id)
     if not retrived_item:
@@ -73,7 +73,7 @@ async def create_item(
     response_description="The updated item",
 )
 async def update_item_by_id(
-    id: str,
+    id: schemas.ItemOID,
     item_in: schemas.ItemUpdate,
     db: AsyncIOMotorDatabase = Depends(deps.get_items_coll),
 ) -> Any:
@@ -92,7 +92,7 @@ async def update_item_by_id(
     response_description="The item just got deleted",
 )
 async def delete_item_by_id(
-    id: str, db: AsyncIOMotorDatabase = Depends(deps.get_items_coll)
+    id: schemas.ItemOID, db: AsyncIOMotorDatabase = Depends(deps.get_items_coll)
 ) -> Any:
     retrived_item = await crud.item.read_by_id(db=db, id=id)
     if not retrived_item:

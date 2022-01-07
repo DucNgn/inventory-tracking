@@ -3,7 +3,7 @@ from bson import ObjectId
 
 class OID(str):
     """
-    FastAPI Field Wrapper for Mongo ObjectID (see https://github.com/tiangolo/fastapi/issues/1515)
+    FastAPI Field Wrapper for Mongo ObjectID.
     """
 
     @classmethod

@@ -1,6 +1,10 @@
 from typing import Optional
+from bson import ObjectId
+from bson.errors import InvalidId
 
 from pydantic import BaseModel, conint
+
+from app.schemas.OID import BaseOID
 
 """
 Schemas for interacting with Items
@@ -37,4 +41,9 @@ class ItemInDBBase(ItemBase):
 
 # Properties must return to client
 class Item(ItemInDBBase):
+    pass
+
+
+# Item OID object
+class ItemOID(BaseOID):
     pass
