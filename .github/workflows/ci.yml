@@ -16,6 +16,9 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
 
+      - name: Copy example .env
+        run: cp example.env .env
+
       - name: Build Docker Container
         run: docker-compose up --build -d
 
