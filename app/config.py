@@ -6,8 +6,8 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     API_V1_PREFIX = "/api/v1"
     APP_NAME = "Inventory Management API"
-    MONGO_URI: str
     TEST_COLLECTION = "TEST_DATABASE"
+    MONGO_URI: str
 
     class Config:
         env_file = ".env"
