@@ -10,3 +10,7 @@ repos:
     rev: 21.12b0
     hooks:
     -   id: black
+-   repo: https://github.com/hadialqattan/pycln
+    rev: v1.1.0
+    hooks:
+    -   id: pycln
