@@ -1,4 +1,4 @@
-# Inventory Management API
+# Inventory Management
 [![Build and Test](https://github.com/DukeNgn/inventory-tracking/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/DukeNgn/inventory-tracking/actions/workflows/ci.yml)
 
 Interactive API at: www.inventoryapi.ducnguyen.dev/docs
@@ -7,13 +7,13 @@ Interactive API at: www.inventoryapi.ducnguyen.dev/docs
     <img src="./docs/demo_swaggerUI.png" />
 </p>
 
-## Back-end Tech Stack
+## :computer: Back-end Tech Stack
 + FastAPI
 + MongoDB
 + Python
 + Docker and Compose
 
-## Features
+## :star2: Features
 
 ### For clients:
 + [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) Functionality. Users are able to:
@@ -36,7 +36,7 @@ Interactive API at: www.inventoryapi.ducnguyen.dev/docs
 + Api tests done by [Pytest](https://docs.pytest.org/) and [Tavern](https://taverntesting.github.io).
 + CI runs tests on push by GitHub Actions.
 
-## Setup
+## :hammer_and_wrench: Setup
 Clone the repo: `git clone https://github.com/DukeNgn/inventory-tracking.git`
 ### .env
 + `cp example.env .env` to create environment file.
@@ -62,7 +62,7 @@ Clone the repo: `git clone https://github.com/DukeNgn/inventory-tracking.git`
 
 > While developing, run `pre-commit install` before committing any changes. [pre-commit](https://pre-commit.com/) runs a style check through all changed files before committing. The rules of `pre-commits` are in `.pre-commit-config.yml` file.
 
-## Testing
+## :test_tube: Testing
 
 ### With Docker container built:
 + `chmod +x run_tests.sh && ./run_tests.sh` to run tests inside the container.
@@ -71,11 +71,11 @@ Clone the repo: `git clone https://github.com/DukeNgn/inventory-tracking.git`
 + `chmod +x run_tests.sh && ./run_tests.sh` to run tests using script.
 + Without script, tests can be ran with command `pytest app/tests`.
 
-## Directory Structure
+## :card_index_dividers: Directory Structure
 + `app` is the main directory containing all the source code.
 + `./app/main.py`: the main start up file.
 + `./run_tests.sh`: the script file to run tests.
 + Each of the subfolder in `./app` has a `README.md` for more details.
 
-## Deployment
+## :whale: Deployment
 The project is containerized and deployed with docker-compose on my personal [Digital Ocean](https://www.digitalocean.com/) VM.
