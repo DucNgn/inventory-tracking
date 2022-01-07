@@ -1,4 +1,5 @@
 # Inventory Management API
+[![Build and Test](https://github.com/DukeNgn/inventory-tracking/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/DukeNgn/inventory-tracking/actions/workflows/ci.yml)
 
 Interactive API at: www.inventoryapi.ducnguyen.dev/docs
 
