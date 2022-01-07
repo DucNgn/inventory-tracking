@@ -1,0 +1,26 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Build Docker Container
+        run: docker-compose up --build -d
+
+      - name: Check running containers
+        run: docker ps -a
+
+      - name: Run tests
+        run: chmod +x ./run_tests.sh && ./run_tests.sh
