@@ -1,0 +1,111 @@
+---
+test_name: Inventory Test
+
+includes:
+  - !include meta.yaml
+
+stages:
+  - name: Getting empty inventory
+    request:
+      url: "{host}{items_prefix}"
+      method: GET
+    response:
+      status_code: 200
+      json: []
+
+  - name: Creating new item successfully
+    request:
+      url: "{host}{items_prefix}"
+      method: POST
+      json:
+        name: "{name}"
+        brand: "{brand}"
+        supplier: "{supplier}"
+    response:
+      strict: false
+      status_code: 200
+      json:
+        name: "{name}"
+        brand: "{brand}"
+        quantity: 0 # default value if the request does not have this field
+        supplier: "{supplier}"
+      save:
+        json:
+          snowboard_shop_id: "id"
+
+  - name: Creating new item without required field
+    request:
+      url: "{host}{items_prefix}"
+      method: POST
+      json:
+        name: backpack
+    response:
+      status_code: 400
+
+  - name: Creating new item with quantity smaller than 0
+    request:
+      url: "{host}{items_prefix}"
+      method: POST
+      json:
+        name: backpack
+        brand: Local
+        supplier: YourLocalShop
+        quantity: -1
+    response:
+      status_code: 400
+
+  - name: Get item by id
+    request:
+      url: "{host}{items_prefix}{snowboard_shop_id}"
+      method: GET
+    response:
+      strict: off
+      status_code: 200
+      json:
+        name: "{name}"
+        brand: "{brand}"
+        supplier: "{supplier}"
+
+  - name: Update item by ID
+    request:
+      url: "{host}{items_prefix}{snowboard_shop_id}"
+      method: PUT
+      json:
+        supplier: shopify
+    response:
+      status_code: 200
+
+  - name: Get all items
+    request:
+      url: "{host}{items_prefix}"
+      method: GET
+    response:
+      status_code: 200
+      json:
+        - name: "{name}"
+          brand: "{brand}"
+          quantity: 0
+          supplier: shopify
+          id: "{snowboard_shop_id}"
+
+  - name: Get CSV file of the inventory
+    request:
+      url: "{host}{items_prefix}get_csv"
+      method: GET
+    response:
+      status_code: 200
+      headers:
+        content-type: "text/csv; charset=utf-8"
+
+  - name: Delete item by ID
+    request:
+      url: "{host}{items_prefix}{snowboard_shop_id}"
+      method: DELETE
+    response:
+      status_code: 200
+      json:
+        name: "{name}"
+        brand: "{brand}"
+        quantity: 0
+        supplier: shopify
+        id: "{snowboard_shop_id}"

@@ -1,0 +1,10 @@
+---
+name: Test Information
+description: metadata for tests
+
+variables:
+  host: http://localhost:8000
+  items_prefix: /api/v1/items/
+  name: snowboard
+  brand: burton
+  supplier: snowdevil

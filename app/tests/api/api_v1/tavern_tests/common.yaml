@@ -1,7 +1,0 @@
----
-name: Common test information
-description: Common settings
-
-variables:
-  host: http://localhost:8000
-  items_prefix: /api/v1/items/

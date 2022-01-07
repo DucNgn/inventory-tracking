@@ -43,7 +43,7 @@ async def test_read_item_by_id(db: AsyncIOMotorDatabase) -> None:
 async def test_update_item_by_id(db: AsyncIOMotorDatabase) -> None:
     name = "Headphone"
     brand = "Sony"
-    supplier = "Amazon"
+    supplier = "local-electronic"
     quantity = 1
 
     new_item = ItemCreate(name=name, brand=brand, supplier=supplier, quantity=quantity)
@@ -63,7 +63,7 @@ async def test_update_item_by_id(db: AsyncIOMotorDatabase) -> None:
 async def test_delete_item_by_id(db: AsyncIOMotorDatabase) -> None:
     name = "Laptop"
     brand = "Acer"
-    supplier = "Amazon"
+    supplier = "local-electronic"
     quantity = 0
 
     new_item = ItemCreate(name=name, brand=brand, supplier=supplier, quantity=quantity)
