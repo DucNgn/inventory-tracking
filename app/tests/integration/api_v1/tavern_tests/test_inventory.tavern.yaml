@@ -2,7 +2,7 @@
 test_name: Inventory Test
 
 includes:
-  - !include meta.yaml
+  - !include common.yaml
 
 stages:
   - name: Getting empty inventory
@@ -74,19 +74,6 @@ stages:
         supplier: shopify
     response:
       status_code: 200
-
-  - name: Get all items
-    request:
-      url: "{host}{items_prefix}"
-      method: GET
-    response:
-      status_code: 200
-      json:
-        - name: "{name}"
-          brand: "{brand}"
-          quantity: 0
-          supplier: shopify
-          id: "{snowboard_shop_id}"
 
   - name: Get CSV file of the inventory
     request:
