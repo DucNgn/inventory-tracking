@@ -18,11 +18,12 @@ IDSchemaType = TypeVar("IDSchemaType", bound=BaseOID)
 class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, IDSchemaType]):
     """
     The generic base class for all CRUD operations.
-    Child Classes inherit this CRUDBase has instance access to CRUD operations.
+    Child Classes inherit this CRUDBase has instant access to CRUD operations.
 
     :ModelType The model from database (must be derived from app.models.base.BaseDBModel)
     :CreateSchemaType The schema for creating new object
     :UpdateSchemaType The schema for updating an object
+    :IDSchemaType The schema of the Object ID
     """
 
     def __init__(self, model: Type[ModelType]):

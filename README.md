@@ -8,9 +8,9 @@ Interactive API at: www.inventoryapi.ducnguyen.dev/docs
 </p>
 
 ## :computer: Back-end Tech Stack
++ Python 3.8
 + FastAPI
 + MongoDB
-+ Python
 + Docker and Compose
 
 ## :star2: Features
@@ -18,8 +18,8 @@ Interactive API at: www.inventoryapi.ducnguyen.dev/docs
 ### For clients:
 + [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) Functionality. Users are able to:
   + Create new item in the inventory
-  + View item by ID
   + View all items in the inventory
+  + View item by ID
   + Delete item by ID
   + Update item by ID
 + Export all products in the inventory to a CSV file.
